@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { useAuth } from './src/context/AuthContext';
+import { handleLoginLogic } from './src/utils/authUtils';
 
 interface LoginScreenProps {
   navigation: any;
@@ -12,28 +13,12 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [error, setError] = useState<string>('');
   const { login } = useAuth();
 
-  const validateEmail = (email: string): boolean => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
   const handleLogin = () => {
-    setError('');
+    const errorMessage = handleLoginLogic(email, password);
+    setError(errorMessage);
     
-    if (!validateEmail(email)) {
-      setError('Invalid email format');
-      return;
-    }
-    
-    if (password.length < 6) {
-      setError('Invalid password format');
-      return;
-    }
-    
-    if (email === 'user@example.com' && password === 'password123') {
-      setError('');
+    if (!errorMessage) {
       login({ email });
-    } else {
-      setError('Incorrect credentials');
     }
   };
 
