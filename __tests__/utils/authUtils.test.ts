@@ -1,4 +1,4 @@
-import { validateEmail, handleLoginLogic, handleSignupLogic } from './authUtils';
+import { validateEmail, handleLoginLogic, handleSignupLogic } from '../../src/utils/authUtils';
 
 describe('validateEmail', () => {
   test('valid email', () => {

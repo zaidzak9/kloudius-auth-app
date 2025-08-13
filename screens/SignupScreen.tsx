@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useAuth } from '../src/context/AuthContext';
 import { handleSignupLogic } from '../src/utils/authUtils';
+import { strings } from '../src/utils/strings';
 
 interface Errors {
   name?: string;
@@ -22,17 +23,17 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
     
     if (Object.keys(validationErrors).length === 0) {
       signup({ name, email });
-      Alert.alert('Success', 'Account created successfully!');
+      Alert.alert(strings.success, strings.accountCreated);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Signup</Text>
+      <Text style={styles.title}>{strings.signup}</Text>
       
       <TextInput
         style={styles.input}
-        placeholder="Name"
+        placeholder={strings.name}
         value={name}
         onChangeText={setName}
       />
@@ -40,7 +41,7 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
       
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder={strings.email}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -50,7 +51,7 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
       
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder={strings.password}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -58,11 +59,11 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
       {errors.password && <Text style={styles.error}>{errors.password}</Text>}
       
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Signup</Text>
+        <Text style={styles.buttonText}>{strings.signupButton}</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.linkText}>Go to Login</Text>
+      <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate(strings.loginScreen)}>
+        <Text style={styles.linkText}>{strings.goToLogin}</Text>
       </TouchableOpacity>
     </View>
   );

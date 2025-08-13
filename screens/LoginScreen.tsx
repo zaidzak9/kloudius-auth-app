@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, BackHandler } from
 import { useState, useEffect } from 'react';
 import { useAuth } from '../src/context/AuthContext';
 import { handleLoginLogic } from '../src/utils/authUtils';
+import { strings } from '../src/utils/strings';
 
 interface LoginScreenProps {
   navigation: any;
@@ -34,11 +35,11 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>{strings.login}</Text>
       
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder={strings.email}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -47,7 +48,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder={strings.password}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -56,11 +57,11 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       {error ? <Text style={styles.error}>{error}</Text> : null}
       
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>{strings.loginButton}</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate('Signup')}>
-        <Text style={styles.linkText}>Go to Signup</Text>
+      <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate(strings.signupScreen)}>
+        <Text style={styles.linkText}>{strings.goToSignup}</Text>
       </TouchableOpacity>
     </View>
   );
