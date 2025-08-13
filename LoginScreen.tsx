@@ -1,12 +1,39 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
+import { useAuth } from './src/context/AuthContext';
 
-export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+interface LoginScreenProps {
+  navigation: any;
+}
+
+export default function LoginScreen({ navigation }: LoginScreenProps) {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const { login } = useAuth();
+
+  const validateEmail = (email: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const handleLogin = () => {
-    console.log('Login pressed:', { email, password });
+    setError('');
+    
+    if (!validateEmail(email)) {
+      setError('Invalid email format');
+      return;
+    }
+    
+    if (password.length < 6) {
+      setError('Invalid password format');
+      return;
+    }
+    
+    if (email === 'user@example.com' && password === 'password123') {
+      login({ email });
+    } else {
+      setError('Incorrect credentials');
+    }
   };
 
   return (
@@ -30,8 +57,14 @@ export default function LoginScreen() {
         secureTextEntry
       />
       
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+      
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      
+      <TouchableOpacity style={styles.linkButton} onPress={() => navigation.navigate('Signup')}>
+        <Text style={styles.linkText}>Go to Signup</Text>
       </TouchableOpacity>
     </View>
   );
@@ -71,5 +104,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  error: {
+    color: 'red',
+    marginBottom: 10,
+  },
+  linkButton: {
+    marginTop: 15,
+  },
+  linkText: {
+    color: '#007AFF',
+    fontSize: 16,
   },
 });
