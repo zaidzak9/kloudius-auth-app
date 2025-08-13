@@ -15,6 +15,7 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<Errors>({});
+  const [showPassword, setShowPassword] = useState(false);
   const { signup } = useAuth();
 
   const handleSignup = () => {
@@ -22,7 +23,7 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
     setErrors(validationErrors);
     
     if (Object.keys(validationErrors).length === 0) {
-      signup({ name, email });
+      signup({ name, email, password });
       Alert.alert(strings.success, strings.accountCreated);
     }
   };
@@ -49,13 +50,21 @@ export default function SignupScreen({ navigation }: { navigation: any }) {
       />
       {errors.email && <Text style={styles.error}>{errors.email}</Text>}
       
-      <TextInput
-        style={styles.input}
-        placeholder={strings.password}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder={strings.password}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity
+          style={styles.eyeIcon}
+          onPress={() => setShowPassword(!showPassword)}
+        >
+          <Text style={styles.eyeText}>{showPassword ? '🙈' : '👁️'}</Text>
+        </TouchableOpacity>
+      </View>
       {errors.password && <Text style={styles.error}>{errors.password}</Text>}
       
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
@@ -89,6 +98,26 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 15,
     marginBottom: 10,
+  },
+  passwordContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 15,
+  },
+  eyeIcon: {
+    padding: 15,
+  },
+  eyeText: {
+    fontSize: 18,
   },
   error: {
     color: 'red',
