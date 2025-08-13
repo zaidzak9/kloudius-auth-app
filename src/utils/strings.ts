@@ -39,4 +39,5 @@ export const strings = {
   // Navigation
   loginScreen: 'Login',
   signupScreen: 'Signup',
+  homeScreen: 'Home',
 };

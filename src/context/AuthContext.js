@@ -2,14 +2,23 @@ import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
+// Simple in-memory storage for demo purposes
+let storedUsers = {};
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const login = (userData) => {
-    setUser(userData);
+  const login = (loginData) => {
+    const userData = storedUsers[loginData.email];
+    if (userData) {
+      setUser(userData);
+    } else {
+      setUser(loginData);
+    }
   };
 
   const signup = (userData) => {
+    storedUsers[userData.email] = userData;
     setUser(userData);
   };
 

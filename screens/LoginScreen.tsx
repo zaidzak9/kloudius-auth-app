@@ -30,6 +30,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     
     if (!errorMessage) {
       login({ email });
+      navigation.navigate(strings.homeScreen);
     }
   };
 

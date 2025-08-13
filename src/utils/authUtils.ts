@@ -13,11 +13,7 @@ export const handleLoginLogic = (email: string, password: string): string => {
     return strings.invalidPasswordFormat;
   }
   
-  if (email === 'user@example.com' && password === 'password123') {
-    return '';
-  }
-  
-  return strings.incorrectCredentials;
+  return '';
 };
 
 export const handleSignupLogic = (name: string, email: string, password: string) => {
