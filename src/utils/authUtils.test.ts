@@ -1,4 +1,4 @@
-import { validateEmail, handleLoginLogic } from './authUtils';
+import { validateEmail, handleLoginLogic, handleSignupLogic } from './authUtils';
 
 describe('validateEmail', () => {
   test('valid email', () => {
@@ -29,5 +29,49 @@ describe('handleLoginLogic', () => {
 
   test('incorrect credentials', () => {
     expect(handleLoginLogic('wrong@example.com', 'password123')).toBe('Incorrect credentials');
+  });
+});
+
+describe('handleSignupLogic', () => {
+  test('valid signup data', () => {
+    expect(handleSignupLogic('John Doe', 'john@example.com', 'password123')).toEqual({});
+  });
+
+  test('missing name', () => {
+    expect(handleSignupLogic('', 'john@example.com', 'password123')).toEqual({
+      name: 'Name is required'
+    });
+  });
+
+  test('missing email', () => {
+    expect(handleSignupLogic('John Doe', '', 'password123')).toEqual({
+      email: 'Email is required'
+    });
+  });
+
+  test('invalid email format', () => {
+    expect(handleSignupLogic('John Doe', 'invalid-email', 'password123')).toEqual({
+      email: 'Invalid email format'
+    });
+  });
+
+  test('missing password', () => {
+    expect(handleSignupLogic('John Doe', 'john@example.com', '')).toEqual({
+      password: 'Password is required'
+    });
+  });
+
+  test('short password', () => {
+    expect(handleSignupLogic('John Doe', 'john@example.com', '123')).toEqual({
+      password: 'Password must be at least 6 characters'
+    });
+  });
+
+  test('multiple validation errors', () => {
+    expect(handleSignupLogic('', 'invalid-email', '123')).toEqual({
+      name: 'Name is required',
+      email: 'Invalid email format',
+      password: 'Password must be at least 6 characters'
+    });
   });
 });
