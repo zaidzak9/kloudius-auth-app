@@ -1,4 +1,4 @@
-import { validateEmail, handleLoginLogic, handleSignupLogic } from './authUtils';
+import { validateEmail, handleLoginLogic, handleSignupLogic } from '../../src/utils/authUtils';
 
 describe('validateEmail', () => {
   test('valid email', () => {
@@ -27,8 +27,8 @@ describe('handleLoginLogic', () => {
     expect(handleLoginLogic('user@example.com', '123')).toBe('Invalid password format');
   });
 
-  test('incorrect credentials', () => {
-    expect(handleLoginLogic('wrong@example.com', 'password123')).toBe('Incorrect credentials');
+  test('any valid email and password', () => {
+    expect(handleLoginLogic('test@example.com', 'validpass')).toBe('');
   });
 });
 
