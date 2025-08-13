@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
-import { useAuth } from './src/context/AuthContext';
-import { handleLoginLogic } from './src/utils/authUtils';
+import { useAuth } from '../src/context/AuthContext';
+import { handleLoginLogic } from '../src/utils/authUtils';
 
 interface LoginScreenProps {
   navigation: any;
