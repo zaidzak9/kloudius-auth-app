@@ -1,11 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './LoginScreen';
+import SignupScreen from './SignupScreen';
 import { AuthProvider } from './src/context/AuthContext';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <AuthProvider>
-      <LoginScreen />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
       <StatusBar style="auto" />
     </AuthProvider>
   );
