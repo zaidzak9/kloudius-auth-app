@@ -30,6 +30,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     }
     
     if (email === 'user@example.com' && password === 'password123') {
+      setError('');
       login({ email });
     } else {
       setError('Incorrect credentials');
