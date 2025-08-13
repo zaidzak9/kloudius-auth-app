@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, BackHandler } from 'react-native';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../src/context/AuthContext';
 import { handleLoginLogic } from '../src/utils/authUtils';
 
@@ -12,6 +12,16 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const { login } = useAuth();
+
+  useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    return () => backHandler.remove();
+  }, []);
 
   const handleLogin = () => {
     const errorMessage = handleLoginLogic(email, password);
