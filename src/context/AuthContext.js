@@ -10,11 +10,11 @@ export const AuthProvider = ({ children }) => {
 
   const login = (loginData) => {
     const userData = storedUsers[loginData.email];
-    if (userData) {
+    if (userData && userData.password === loginData.password) {
       setUser(userData);
-    } else {
-      setUser(loginData);
+      return true;
     }
+    return false;
   };
 
   const signup = (userData) => {

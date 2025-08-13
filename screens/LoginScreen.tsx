@@ -12,6 +12,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { login } = useAuth();
 
   useEffect(() => {
@@ -29,8 +30,12 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     setError(errorMessage);
     
     if (!errorMessage) {
-      login({ email });
-      navigation.navigate(strings.homeScreen);
+      const success = login({ email, password });
+      if (success) {
+        navigation.navigate(strings.homeScreen);
+      } else {
+        setError('Invalid email or password');
+      }
     }
   };
 
@@ -47,13 +52,21 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
         autoCapitalize="none"
       />
       
-      <TextInput
-        style={styles.input}
-        placeholder={strings.password}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder={strings.password}
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity
+          style={styles.eyeIcon}
+          onPress={() => setShowPassword(!showPassword)}
+        >
+          <Text style={styles.eyeText}>{showPassword ? '🙈' : '👁️'}</Text>
+        </TouchableOpacity>
+      </View>
       
       {error ? <Text style={styles.error}>{error}</Text> : null}
       
@@ -88,6 +101,26 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 15,
     marginBottom: 15,
+  },
+  passwordContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 15,
+  },
+  passwordInput: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 15,
+  },
+  eyeIcon: {
+    padding: 15,
+  },
+  eyeText: {
+    fontSize: 18,
   },
   button: {
     width: '100%',
