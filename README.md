@@ -21,6 +21,6 @@ Bonus notes
 - created test cases using JEST
 - seperated string and utils into their own files.
 
-IOS VIDEO RECORD
+[IOS VIDEO RECORD](https://drive.google.com/file/d/1Fr-b9hvEoTAiG400gwvrIeTWYhoq2HaL/view?usp=sharing)
 
-ANDROID VIDEO RECORD
+[ANDROID VIDEO RECORD](https://drive.google.com/file/d/1hwLln9idr0wPYh-v1ARU4dFFzyG0z6Lj/view?usp=sharing)
